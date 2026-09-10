@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Bonds Corporation | Executive Intelligence & Early Warning System (V4)</title>
+  <meta name="description" content="Institutional Executive Cockpit and Frontline Knowledge Assistant for National Bonds Corporation. Audited ground-truth analytics, agentic workflows, and Sharia compliance.">
+
+  <!-- Design Tokens, Layout & Components -->
+  <link rel="stylesheet" href="css/design-tokens.css?v=4.3.0">
+  <link rel="stylesheet" href="css/layout.css?v=4.3.0">
+  <link rel="stylesheet" href="css/components.css?v=4.3.0">
+
+  <!-- ApexCharts Suite (Defect 1 Fix: Zero Legend Overlap) -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ====================================================================
+         1. Left Navigation Sidebar (280px Desktop Workstation Standard)
+         ==================================================================== -->
+    <aside class="sidebar" id="app-sidebar">
+      <!-- Brand Emblem & Title -->
+      <div class="sidebar-brand">
+        <div class="brand-emblem">NB</div>
+        <div class="brand-info">
+          <span class="brand-title">National Bonds</span>
+          <span class="brand-subtitle">Executive AI System</span>
+        </div>
+      </div>
+
+      <!-- Operating View Switcher -->
+      <div class="sidebar-mode-selector">
+        <div class="mode-selector-label">
+          <span class="material-symbols-rounded" style="font-size: 14px;">view_quilt</span>
+          Operating Persona Mode
+        </div>
+        <div class="mode-pills">
+          <button class="mode-pill active" id="btn-mode-executive">
+            <span class="material-symbols-rounded" style="font-size: 14px;">dashboard</span>
+            Executive
+          </button>
+          <button class="mode-pill" id="btn-mode-frontline">
+            <span class="material-symbols-rounded" style="font-size: 14px;">support_agent</span>
+            Frontline
+          </button>
+        </div>
+      </div>
+
+      <!-- Slicer: Product Family -->
+      <div class="sidebar-section">
+        <label class="sidebar-label" for="sidebar-product-select">
+          <span>Active Product</span>
+          <span class="material-symbols-rounded" style="font-size: 13px;">category</span>
+        </label>
+        <select class="sidebar-select" id="sidebar-product-select">
+          <option value="Saving Bonds" selected>Saving Bonds (Retail)</option>
+          <option value="Term Sukuk (Fixed Income)">Term Sukuk (Fixed Income)</option>
+          <option value="Booster Plan">Booster Plan (Loyalty)</option>
+          <option value="Second Salary (Regular Savings)">Second Salary (Regular Savings)</option>
+          <option value="MyPlan / Regular Saver">MyPlan / Regular Saver</option>
+        </select>
+
+        <!-- Product Quick Summary Card -->
+        <div class="sidebar-product-card">
+          <div class="product-card-hdr">
+            <span class="product-card-name" id="sidebar-prod-name">Saving Bonds</span>
+            <span class="status-badge warning" id="sidebar-prod-badge" style="font-size: 9.5px; padding: 2px 6px;">WARNING</span>
+          </div>
+          <div class="product-stat-row">
+            <span>Net Inflows:</span>
+            <span class="product-stat-val" id="sidebar-prod-net">AED 41.7M</span>
+          </div>
+          <div class="product-stat-row">
+            <span>Variance vs Target:</span>
+            <span class="product-stat-val" id="sidebar-prod-var" style="color: #ef4444;">-10.2%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Executive Reports & Dossiers Section -->
+      <div class="sidebar-section">
+        <div class="sidebar-label">
+          <span>Executive Dossiers</span>
+          <span class="material-symbols-rounded" style="font-size: 13px;">folder_special</span>
+        </div>
+        <div class="sidebar-nav-list">
+          <button class="sidebar-nav-item" id="sidebar-nav-memo" data-exec-report="report">
+            <span class="material-symbols-rounded">description</span>
+            <span>Bi-Weekly Memo</span>
+          </button>
+          <button class="sidebar-nav-item" id="sidebar-nav-gcco" data-exec-report="gcco">
+            <span class="material-symbols-rounded">assignment_late</span>
+            <span>GCCO Briefing</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pinned Footer User Profile -->
+      <div class="sidebar-footer" id="btn-user-profile" title="Manage Profile or Switch User" style="cursor: pointer;">
+        <div class="user-avatar" id="sidebar-user-avatar">JA</div>
+        <div class="user-meta">
+          <span class="user-name" id="sidebar-user-name">Jawad Ahmad</span>
+          <span class="user-role" id="sidebar-user-role">GCCO Commercial Advisory</span>
+        </div>
+        <button class="profile-edit-pencil-btn" id="btn-sidebar-edit-pencil" title="Edit Profile Details">
+          <span class="material-symbols-rounded">edit</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         2. Main Content Canvas
+         ==================================================================== -->
+    <main class="main-canvas">
+      <div class="canvas-container">
+
+        <!-- Global Executive Header -->
+        <header class="exec-header">
+          <div class="header-brand-group">
+            <h1 class="header-title" style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span>National Bonds Corporation</span>
+              <span class="live-pulse-badge" id="live-telemetry-badge" title="Live transactions stream active">
+                <span class="live-pulse-dot"></span> LIVE TELEMETRY
+              </span>
+            </h1>
+            <p class="header-subtitle">Executive Intelligence & Early Warning System &bull; Initiative 3 (Zero-Streamlit V4)</p>
+          </div>
+
+          <!-- Header Right Controls: Slim Stat Strip + Notifications Button -->
+          <div class="header-right-controls">
+            <!-- Slim Horizontal Metric Strip (Total Portfolio, Net Inflows, Active Savers) -->
+            <div class="header-stat-strip" id="header-stat-strip">
+              <div class="header-stat-item">
+                <span class="stat-label">
+                  <span class="material-symbols-rounded">account_balance</span>
+                  Total Portfolio
+                </span>
+                <div class="stat-value-group">
+                  <span class="stat-val" id="hdr-stat-aum">AED 18.34B</span>
+                  <span class="stat-badge positive">+8.4% YoY</span>
+                </div>
+              </div>
+              <div class="header-stat-item">
+                <span class="stat-label">
+                  <span class="material-symbols-rounded">payments</span>
+                  Net Inflows
+                </span>
+                <div class="stat-value-group">
+                  <span class="stat-val" id="hdr-stat-net">AED 617.0M</span>
+                  <span class="stat-badge warning" id="hdr-stat-net-badge">-9.5% vs Target</span>
+                </div>
+              </div>
+              <div class="header-stat-item">
+                <span class="stat-label">
+                  <span class="material-symbols-rounded">group</span>
+                  Active Savers
+                </span>
+                <div class="stat-value-group">
+                  <span class="stat-val" id="hdr-stat-savers">154.2K</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top Right Notification Center Button & Drawer -->
+            <div class="notification-center-wrap">
+              <button class="notification-btn" id="notification-btn" title="View Active Deviations & Alerts">
+                <span class="material-symbols-rounded notification-icon">notifications</span>
+                <span class="notification-label">Alerts</span>
+                <span class="notification-counter-badge" id="notification-badge">3</span>
+              </button>
+
+              <!-- Floating Alerts Popover Drawer -->
+              <div class="notification-popover hidden" id="notification-popover">
+                <div class="notif-popover-header">
+                  <div class="notif-popover-title">
+                    <span class="material-symbols-rounded" style="color: #ef4444; font-size: 18px;">warning</span>
+                    <span>Tolerance Deviations</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="status-badge breach" id="notif-popover-cycle">Cycle 2026-06</span>
+                    <button class="notif-close-btn" id="notif-close-btn" title="Close Alerts">
+                      <span class="material-symbols-rounded" style="font-size: 16px;">close</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="notif-popover-body" id="notif-popover-list">
+                  <!-- Populated dynamically by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Unified Command Bar: 3 Tabs (Left) + Inline Filters (Right) -->
+        <div class="command-bar" id="exec-command-bar">
+          <nav class="tabs-ribbon" id="exec-tabs-nav">
+            <button class="nav-tab active" data-exec-tab="workflow">
+              <span class="material-symbols-rounded">schema</span>
+              Six Step Workflow
+            </button>
+            <button class="nav-tab" data-exec-tab="portfolio">
+              <span class="material-symbols-rounded">table_chart</span>
+              Portfolio Matrix
+            </button>
+            <button class="nav-tab" data-exec-tab="diagnostic">
+              <span class="material-symbols-rounded">troubleshoot</span>
+              Diagnostics
+            </button>
+          </nav>
+
+          <!-- Inline Filters Integrated Right Next to Tabs -->
+          <div class="inline-filters-bar" id="inline-filters-bar">
+            <div class="inline-filter-item">
+              <span class="filter-label">Cycle</span>
+              <select class="inline-filter-select" id="filter-cycle-select">
+                <option value="2026-06" selected>2026-06</option>
+                <option value="2026-05">2026-05</option>
+                <option value="2026-04">2026-04</option>
+                <option value="2026-03">2026-03</option>
+                <option value="2026-02">2026-02</option>
+                <option value="2026-01">2026-01</option>
+              </select>
+            </div>
+            <div class="inline-filter-item">
+              <span class="filter-label">Product</span>
+              <select class="inline-filter-select" id="filter-product-select">
+                <option value="All Products" selected>All 5 Products</option>
+                <option value="Saving Bonds">Saving Bonds</option>
+                <option value="Term Sukuk (Fixed Income)">Term Sukuk</option>
+                <option value="Booster Plan">Booster Plan</option>
+                <option value="Second Salary (Regular Savings)">Second Salary</option>
+                <option value="MyPlan / Regular Saver">MyPlan Saver</option>
+              </select>
+            </div>
+            <div class="inline-filter-item">
+              <span class="filter-label">Tier</span>
+              <select class="inline-filter-select" id="filter-tier-select">
+                <option value="All">All Tiers (154.2K)</option>
+                <option value="Mass Affluent">Mass Affluent</option>
+                <option value="Emirati National">Emirati National</option>
+                <option value="High Net Worth">High Net Worth</option>
+              </select>
+            </div>
+            <div class="inline-filter-item">
+              <span class="filter-label">Channel</span>
+              <select class="inline-filter-select" id="filter-channel-select">
+                <option value="All">All Channels</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="Branch Network">Branch Network</option>
+                <option value="Web Portal">Web Portal</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active View / Subsystem Content Pane -->
+        <div id="view-container"></div>
+
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         3. Floating JD AI Copilot (Defect 4 Fix: Fluid Max Height & Scroll)
+         ==================================================================== -->
+    <button class="copilot-trigger" id="copilot-trigger" title="Open JD AI Copilot">
+      <span class="material-symbols-rounded" style="font-size: 26px;">smart_toy</span>
+    </button>
+
+    <div class="copilot-popover hidden" id="copilot-popover">
+      <!-- Header -->
+      <div class="copilot-hdr">
+        <div class="copilot-title-group">
+          <span class="material-symbols-rounded" style="color: #38bdf8;">smart_toy</span>
+          <span class="copilot-title">JD Executive AI Copilot</span>
+          <span class="status-badge healthy" style="font-size: 9px; padding: 2px 6px;">LIVE AI</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button id="copilot-expand-btn" class="copilot-hdr-btn" title="Full Screen (Expand)" aria-label="Full Screen">
+            <svg id="copilot-expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+          </button>
+          <button id="copilot-reset-btn" class="copilot-hdr-btn" title="Reset Conversation" aria-label="Reset Conversation">
+            <span class="material-symbols-rounded" style="font-size: 18px;">refresh</span>
+          </button>
+          <button id="copilot-close-btn" class="copilot-hdr-btn" title="Close" aria-label="Close">
+            <span class="material-symbols-rounded" style="font-size: 18px;">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Body / Messages -->
+      <div class="copilot-body" id="copilot-body">
+        <!-- Starter / Welcome View (Only visible before first message is sent) -->
+        <div id="copilot-starter-view" class="copilot-starter-view">
+          <div class="copilot-chips-grid">
+            <button class="copilot-chip" data-prompt="Explain the Saving Bonds deficit in 2026-06">
+              Explain Saving Bonds Deficit
+            </button>
+            <button class="copilot-chip" data-prompt="Compare Second Salary yield and shortfall">
+              Compare Second Salary Yield
+            </button>
+            <button class="copilot-chip" data-prompt="Show Q3 Liquidity Projection from Monte Carlo">
+              Show Q3 Liquidity Projection
+            </button>
+            <button class="copilot-chip" data-prompt="What are Booster Plan early withdrawal penalties?">
+              Booster Plan Penalties & Rules
+            </button>
+            <button class="copilot-chip" data-prompt="Top customer segment demographic drivers">
+              Top Customer Segment Drivers
+            </button>
+            <button class="copilot-chip" data-prompt="What are the ALCO approved recommendations?">
+              ALCO Recommendations
+            </button>
+          </div>
+
+          <div class="chat-bubble assistant starter-bubble" style="margin-top: 10px;">
+            Good day! I am <b>JD</b>, your Executive Copilot for National Bonds Corporation. I am grounded in audited H1 2026 data across all 58 slides, 154K customer records, and official circulars. How may I assist your commercial analysis today?
+          </div>
+        </div>
+
+        <div id="copilot-messages" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      </div>
+
+      <!-- Sticky Input Bar -->
+      <div class="copilot-footer">
+        <input type="text" id="copilot-input" class="copilot-input" placeholder="Ask JD anything across 58 slides, KPIs, circulars...">
+        <button class="copilot-send-btn" id="copilot-send-btn">
+          <span class="material-symbols-rounded" style="font-size: 18px;">send</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====================================================================
+       Executive Authentication & User Profile Modal
+       ==================================================================== -->
+  <div class="auth-modal-overlay" id="auth-modal-overlay">
+    <div class="auth-modal-container">
+      <div class="auth-modal-header">
+        <div class="auth-modal-title-group">
+          <div class="auth-brand-emblem">NB</div>
+          <div>
+            <h3 class="auth-modal-title">National Bonds Executive Portal</h3>
+            <p class="auth-modal-subtitle">Profile Management & Access Control</p>
+          </div>
+        </div>
+        <button class="auth-modal-close" id="btn-close-auth-modal" title="Close modal">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <!-- Auth Tabs: Sign In vs Sign Up vs Edit Profile -->
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tab-btn-login">
+          <span class="material-symbols-rounded" style="font-size: 16px;">login</span>
+          Sign In
+        </button>
+        <button class="auth-tab-btn" id="tab-btn-signup">
+          <span class="material-symbols-rounded" style="font-size: 16px;">person_add</span>
+          Sign Up
+        </button>
+        <button class="auth-tab-btn" id="tab-btn-edit-profile">
+          <span class="material-symbols-rounded" style="font-size: 16px;">edit</span>
+          Edit Profile
+        </button>
+      </div>
+
+      <div class="auth-modal-body">
+        <!-- Status / Feedback Banner -->
+        <div class="auth-feedback-banner" id="auth-feedback-banner"></div>
+
+        <!-- 1. SIGN IN FORM -->
+        <form id="form-auth-login">
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="login-email">Official Corporate Email</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">mail</span>
+              <input type="email" id="login-email" class="auth-input" placeholder="e.g. jawad.ahmad@nationalbonds.ae" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="login-password">Password</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">lock</span>
+              <input type="password" id="login-password" class="auth-input" placeholder="Enter password" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <button type="submit" class="auth-btn-primary" id="btn-submit-login">
+            <span class="material-symbols-rounded" style="font-size: 18px;">login</span>
+            Sign In to Executive Portal
+          </button>
+
+          <!-- Quick Persona Switchers -->
+          <div class="quick-profiles-section">
+            <span class="quick-profiles-label">Quick Switch to Seeded Profile</span>
+            <div class="quick-profiles-list" id="quick-profiles-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </form>
+
+        <!-- 2. SIGN UP FORM -->
+        <form id="form-auth-signup" style="display: none;">
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signup-name">Full Name</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">person</span>
+              <input type="text" id="signup-name" class="auth-input" placeholder="e.g. Tariq Al Mansoor" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signup-email">Official Corporate Email</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">mail</span>
+              <input type="email" id="signup-email" class="auth-input" placeholder="e.g. tariq.mansoor@nationalbonds.ae" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signup-phone">Phone Number</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">call</span>
+              <input type="tel" id="signup-phone" class="auth-input" placeholder="e.g. +971 50 888 7766" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signup-designation">Designation / Department</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">badge</span>
+              <input type="text" id="signup-designation" class="auth-input" placeholder="e.g. Head of Liquidity Management" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="signup-password">Password</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">lock</span>
+              <input type="password" id="signup-password" class="auth-input" placeholder="Create a password" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <button type="submit" class="auth-btn-primary" id="btn-submit-signup">
+            <span class="material-symbols-rounded" style="font-size: 18px;">person_add</span>
+            Create Account & Save Profile
+          </button>
+        </form>
+
+        <!-- 3. EDIT PROFILE FORM -->
+        <form id="form-auth-edit" style="display: none;">
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="edit-name">Full Name</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">person</span>
+              <input type="text" id="edit-name" class="auth-input" placeholder="e.g. Jawad Ahmad" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="edit-email">Official Corporate Email (Immutable Account ID)</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">mail</span>
+              <input type="email" id="edit-email" class="auth-input" readonly style="background: #f1f5f9; cursor: not-allowed; color: #64748b;">
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="edit-phone">Contact Phone Number</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">call</span>
+              <input type="tel" id="edit-phone" class="auth-input" placeholder="e.g. +971 50 123 4567" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="edit-designation">Designation / Department</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">badge</span>
+              <input type="text" id="edit-designation" class="auth-input" placeholder="e.g. GCCO Commercial Advisory Lead" required>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="edit-password">New Password (Optional)</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">lock</span>
+              <input type="password" id="edit-password" class="auth-input" placeholder="Leave blank to keep current password" autocomplete="new-password">
+            </div>
+          </div>
+
+          <button type="submit" class="auth-btn-primary" id="btn-submit-edit">
+            <span class="material-symbols-rounded" style="font-size: 18px;">save</span>
+            Save Profile Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       Frontline Commercial Governance Escalation Ticket Modal
+       ==================================================================== -->
+  <div class="escalation-modal-overlay" id="escalation-modal-overlay">
+    <div class="escalation-modal-container">
+      <div class="escalation-modal-header">
+        <div class="auth-modal-title-group">
+          <div class="auth-brand-emblem" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <span class="material-symbols-rounded" style="font-size: 20px;">confirmation_number</span>
+          </div>
+          <div>
+            <h3 class="auth-modal-title">Create Escalation Ticket</h3>
+            <p class="auth-modal-subtitle">Frontline Product Management & Commercial Policy Determination</p>
+          </div>
+        </div>
+        <button class="auth-modal-close" id="btn-close-escalation-modal" title="Close modal">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <div class="escalation-modal-body">
+        <div class="auth-feedback-banner" id="escalation-feedback-banner"></div>
+
+        <form id="form-create-escalation">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="esc-user-name">Requester Name</label>
+              <div class="auth-input-wrap">
+                <span class="material-symbols-rounded">person</span>
+                <input type="text" id="esc-user-name" class="auth-input" value="Ahmed (RM)" required>
+              </div>
+            </div>
+
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="esc-user-role">Role / Department</label>
+              <div class="auth-input-wrap">
+                <span class="material-symbols-rounded">badge</span>
+                <input type="text" id="esc-user-role" class="auth-input" value="Sales / Relationship Manager" required>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="esc-product">Target Product</label>
+              <div class="auth-input-wrap">
+                <span class="material-symbols-rounded">category</span>
+                <select id="esc-product" class="auth-input" style="padding-left: 38px;">
+                  <option value="Saving Bonds">Saving Bonds (Retail)</option>
+                  <option value="Term Sukuk (Fixed Income)">Term Sukuk (Fixed Income)</option>
+                  <option value="Booster Plan" selected>Booster Plan (Loyalty)</option>
+                  <option value="Second Salary (Regular Savings)">Second Salary (Regular Savings)</option>
+                  <option value="MyPlan / Regular Saver">MyPlan / Regular Saver</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="esc-priority">Priority SLA</label>
+              <div class="auth-input-wrap">
+                <span class="material-symbols-rounded">flag</span>
+                <select id="esc-priority" class="auth-input" style="padding-left: 38px;">
+                  <option value="HIGH">High Priority (24h SLA)</option>
+                  <option value="URGENT">Urgent (Executive Review)</option>
+                  <option value="NORMAL">Normal (48h SLA)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="esc-reason">Escalation Category / Reason</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">report_problem</span>
+              <select id="esc-reason" class="auth-input" style="padding-left: 38px;">
+                <option value="Policy Exception / Fee Waiver">Policy Exception & Fee Waiver Request</option>
+                <option value="Fatwa / Sharia Certification Clarification">Fatwa & Sharia Certification Clarification</option>
+                <option value="HNW Commercial Retention Incentive">HNW Commercial Retention Incentive</option>
+                <option value="Draft Circular / Promo Rate Inconsistency">Draft Circular & Promo Rate Inconsistency</option>
+                <option value="Digital Gateway Reconciliation Inquiry">Digital Gateway Reconciliation Inquiry</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="esc-query">Customer Inquiry / Commercial Details</label>
+            <textarea id="esc-query" class="auth-input" rows="3" style="padding-left: 12px; resize: vertical; min-height: 80px;" placeholder="Provide specific customer context, account balance, certificate number, or specific policy question requiring approval..." required>Can we offer the extra 1.5% promo bonus on Booster Plan for fresh money?</textarea>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="esc-assigned">Assigned Escalation Authority</label>
+            <div class="auth-input-wrap">
+              <span class="material-symbols-rounded">assignment_ind</span>
+              <select id="esc-assigned" class="auth-input" style="padding-left: 38px;">
+                <option value="Fariha Fatima Hameed (Product Management Lead)">Fariha Fatima Hameed (Product Management Lead)</option>
+                <option value="Jawad Ahmad (GCCO Commercial Advisory Lead)">Jawad Ahmad (GCCO Commercial Advisory Lead)</option>
+                <option value="Alisha Rizvi (Regulatory & Sharia Compliance)">Alisha Rizvi (Regulatory & Sharia Compliance)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="button" class="dossier-btn-export" id="btn-cancel-escalation" style="flex: 1; justify-content: center;">
+              Cancel
+            </button>
+            <button type="submit" class="auth-btn-primary" id="btn-submit-escalation" style="flex: 2; margin-top: 0; background: linear-gradient(135deg, #f59e0b, #d97706);">
+              <span class="material-symbols-rounded" style="font-size: 18px;">send</span>
+              Submit Escalation Ticket
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/data.js?v=4.3.0"></script>
+  <script src="js/charts.js?v=4.3.0"></script>
+  <script src="js/executive.js?v=4.3.0"></script>
+  <script src="js/frontline.js?v=4.3.0"></script>
+  <script src="js/copilot.js?v=4.3.0"></script>
+  <script src="js/app.js?v=4.3.0"></script>
+</body>
+</html>
