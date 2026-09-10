@@ -1,4 +1,4 @@
-# National Bonds Corporation — Executive Intelligence & Early Warning System (V4)
+# National Bonds Corporation — Product Intelligence & Early Warning System (V4)
 
 Live Executive Web Application for National Bonds Corporation (UAE).
 - **Audited Ground Truth KPIs**: H1 2026 Presentation Records
